@@ -1,0 +1,37 @@
+@(book: Book, copies: List[Copy], copyForm: Form[Copy])
+
+@import helper._
+
+@main("Copies list for book: " + book.title) {
+
+    <h1>@book.title: @copies.size() book(s)</h1>
+
+    <table>
+        <tr>
+            <td>Book author</td>
+            <td>Book title</td>
+            <td>Book owner</td>
+        </tr>
+        @for(copy <- copies) {
+            <tr>
+                <td>@copy.book.author</td>
+                <td>@copy.book.title</td>
+                <td>@copy.owner</td>
+                <td>
+                @form(routes.CopyController.deleteCopy(copy.id)) {
+                    <input type="submit" value="Delete">
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+
+    <h2>Add a new copy</h2>
+    @form(routes.CopyController.newCopy()) {
+        @inputText(copyForm("owner"))
+        <input type="hidden" id="book.id" name="book.id" value="@book.id" >
+        <input type="submit" value="Create">
+    }
+
+    <a href="/books">Back to books</a>
+}

@@ -1,0 +1,26 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET         /                         controllers.Application.index()
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file             controllers.Assets.at(path="/public", file)
+
+# Tasks
+GET         /tasks                    controllers.Application.tasks()
+POST        /tasks                    controllers.Application.newTask()
+POST        /tasks/:id/delete         controllers.Application.deleteTask(id: Long)
+
+# Books
+GET         /books                    controllers.BookController.books()
+POST        /books                    controllers.BookController.newBook()
+POST        /books/:id/delete         controllers.BookController.deleteBook(id: Long)
+GET         /bookscopies              controllers.BookController.listCopies()
+
+# Books
+GET         /copies/:bookId           controllers.CopyController.copies(bookId: Long)
+POST        /copies                   controllers.CopyController.newCopy()
+POST        /copies/:id/delete        controllers.CopyController.deleteCopy(id: Long)
+

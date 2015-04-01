@@ -1,0 +1,43 @@
+@(booksMap: Map[String, String], books: List[Book], bookForm: Form[Book])
+
+@import helper._
+
+@main("Books list") {
+
+    <h1>@books.size() book(s)</h1>
+
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>Author</td>
+            <td>Title</td>
+            <id>ACTION</id>
+        </tr>
+        @for(book <- books) {
+            <tr>
+                <td>@book.id</td>
+                <td>@book.author</td>
+                <td>@book.title</td>
+                <td>
+                @form(routes.BookController.deleteBook(book.id)) {
+                    <input type="submit" value="Delete">
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+
+    <h2>View copies</h2>
+    @form(routes.BookController.listCopies()) {
+        @select(field = bookForm("id"), options = options(booksMap))
+        <input type="submit" value="Search">
+    }
+
+    <h2>Add a new book</h2>
+    @form(routes.BookController.newBook()) {
+        @inputText(bookForm("author"))
+        @inputText(bookForm("title"))
+        <input type="submit" value="Create">
+    }
+
+}
